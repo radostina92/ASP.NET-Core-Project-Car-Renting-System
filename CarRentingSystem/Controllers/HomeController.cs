@@ -1,4 +1,7 @@
-﻿using CarRentingSystem.Models;
+﻿using CarRentingSystem.Data;
+using CarRentingSystem.Models;
+using CarRentingSystem.Models.Cars;
+using CarRentingSystem.Models.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +9,39 @@ namespace CarRentingSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly CarRentalDbContext data;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        public HomeController(CarRentalDbContext data) => this.data = data;
+
+       
 
         public IActionResult Index()
         {
-            return View();
+            var totalCars = this.data.Cars.Count();
+
+            var totalUsers = this.data.Users.Count();
+
+            var cars = this.data
+                .Cars
+                .OrderByDescending(c => c.Id)
+                .Select(
+                c => new CarIndexViewModel
+                {
+                    Id = c.Id,
+                    Brand = c.Brand,
+                    Model = c.Model,
+                    ImageUrl = c.ImageUrl,
+                    Year = c.Year
+
+                })
+                .Take(3)
+                .ToList();
+
+            return View(new IndexViewModel
+            {
+                TotalCars = totalCars,
+                Cars = cars
+            });
         }
 
         public IActionResult Privacy()

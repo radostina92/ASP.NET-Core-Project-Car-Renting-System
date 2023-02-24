@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CarRentingSystem.Data;
 
+
 namespace CarRentingSystem.Models.Cars
 {
     public class AddCarFormModel
@@ -28,6 +29,6 @@ namespace CarRentingSystem.Models.Cars
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 
-        public IEnumerable<CarCategoryViewModel> Categories { get; set; }
+        public IEnumerable<CarCategoryViewModel>? Categories { get; set; }
     }
 }
