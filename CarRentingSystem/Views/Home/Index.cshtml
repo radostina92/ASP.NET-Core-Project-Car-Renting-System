@@ -34,61 +34,50 @@
 
             @if (firstCar != null)
             {
-                <img class="d-block w-100" src="@firstCar.ImageUrl" alt="@firstCar.Brand @firstCar.Model">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>@firstCar.Brand @firstCar.Model @firstCar.Year</h5>
-                </div>
+                <img class="d-block w-100" src="@firstCar.ImageUrl" alt="First slide">
+                <h5>@firstCar.Brand @firstCar.Model @firstCar.Year</h5>
             }
-        </div>
-        <div class="carousel-item">
 
-            @if (secondCar != null)
-            {
-                <img class="d-block w-100" src="@secondCar.ImageUrl" alt="@secondCar.Brand @secondCar.Model">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>@secondCar.Brand @secondCar.Model @secondCar.Year</h5>
-                </div>
-            }
         </div>
-    </div>
-    <div class="carousel-item">
+        @if (secondCar != null)
+        {
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="@secondCar.ImageUrl" alt="Second slide">
+                <h5>@secondCar.Brand @secondCar.Model @secondCar.Year</h5>
+            </div>
+        }
 
         @if (thirdCar != null)
         {
-            <img class="d-block w-100" src="@thirdCar.ImageUrl" alt="@thirdCar.Brand @thirdCar.Model">
-            <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="@thirdCar.ImageUrl" alt="Third slide">
                 <h5>@thirdCar.Brand @thirdCar.Model @thirdCar.Year</h5>
             </div>
         }
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>
-    
-<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-</a>
-<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-</a>
+
 
 <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-4">
-                @Model.TotalCars Total Cars
-            </div>
-            <div class="col-md-4">
-                @Model.TotalUsers Total Users
-            </div>
-            <div class="col-md-4">
-                @Model.TotalRents Total Rents
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Model.TotalCars Total Cars
+        </div>
+        <div class="col-md-4">
+            @Model.TotalUsers Total Users
+        </div>
+        <div class="col-md-4">
+            @Model.TotalRents Total Rents
         </div>
     </div>
-
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Fluid jumbotron</h1>
-    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-  </div>
 </div>
+
+

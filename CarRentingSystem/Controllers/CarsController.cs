@@ -17,8 +17,34 @@ namespace CarRentingSystem.Controllers
             Categories = this.GetCarCategories()
         });
 
-        public IActionResult All()
+        public IActionResult All(string brand, string searchTerm, AllCarsSorting sorting)
         {
+            var carsQuery = this.data.Cars.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(brand))
+            {
+                carsQuery = carsQuery.
+                    Where(c => c.Brand == brand);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                carsQuery = carsQuery.Where(
+                   c => c.Brand.ToLower().Contains(searchTerm.ToLower())
+                   || c.Model.ToLower().Contains(searchTerm.ToLower())
+                   || c.Description.ToLower().Contains(searchTerm.ToLower())
+                );
+            }
+
+            carsQuery = sorting switch
+            {
+                AllCarsSorting.DateCreated => carsQuery.OrderByDescending(c => c.Id),
+                AllCarsSorting.Year => carsQuery.OrderByDescending(c => c.Year),
+                AllCarsSorting.Brand => carsQuery.OrderByDescending(c => c.Brand),
+                AllCarsSorting.Model => carsQuery.OrderByDescending(c => c.Model),
+                _ => carsQuery.OrderByDescending(c => c.Id)
+            };
+
             var cars = this.data
                 .Cars
                 .OrderByDescending(c => c.Id)
@@ -35,7 +61,20 @@ namespace CarRentingSystem.Controllers
                 })
                 .ToList();
 
-            return View(cars);
+            var carBrands = this.data
+                .Cars
+                .Select(c => c.Brand)
+                .Distinct()
+                .ToList();
+
+            return View(new AllCarsQueryModel
+            {
+                BrandSelcted = brand,
+                AllBrands = carBrands,
+                SearchTerm = searchTerm,
+                CarsSorting = sorting,
+                Cars = cars
+            });
         }
 
         [HttpPost]
